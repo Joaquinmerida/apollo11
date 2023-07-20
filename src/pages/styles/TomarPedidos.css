@@ -1,0 +1,66 @@
+.switchDelivery{
+    width: 4rem;
+    height: 2rem;
+}
+
+h1{
+    width: 100%;
+    text-align: center;
+}
+.comandaPedidoWrapper{
+    display: flex;
+    flex-direction: column;
+    width: 35%;
+    align-items: center;
+}
+
+.platosWrapper{
+    width: 100%;
+    text-align: center;
+}
+.comandaHeader{
+    padding: 2%;
+    display: flex;
+    flex-direction: row;  
+    flex-wrap: wrap;  
+}
+.comandaHeader label{
+    width: 50%;
+}
+
+.botonesWrapper{
+    width: calc(100% - 36%);
+    background-color: lightpink;
+}
+
+.botones{
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    padding: 1%;
+    border-bottom: 5px solid black;
+}
+
+.botones button{
+    height: 5rem;
+    width: 6rem;
+    background-color: rgb(211, 172, 102);
+}
+
+.botonesPasta{
+    background-color: rgba(123, 252, 136, 0.6);
+}
+
+.botonesMinutas{
+    background-color: rgba(240, 255, 255, 0.867);
+}
+
+.botonesParrilla{
+    background-color: rgba(167, 132, 199, 0.635);
+}
+
+h3{
+    width: 100%;
+    margin: 0%;
+    color: rgba(0, 0, 139, 0.557);
+}

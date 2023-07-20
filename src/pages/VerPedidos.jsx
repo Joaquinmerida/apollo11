@@ -2,6 +2,7 @@ import React from 'react'
 import Comanda from '../components/Comanda'
 
 const VerPedidos = () => {
+    
 const pedido = {
     mesa: '1',
     horapedido: '15:00',
