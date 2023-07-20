@@ -1,0 +1,20 @@
+.comandaTable{
+    border: 1px solid red;
+    padding: 1rem;
+    margin: 1rem;
+    border-collapse: collapse;
+}
+
+.headerTable{
+    background-color: grey;
+}
+
+.comandaTable th{
+    padding: 0.5rem 1rem;
+}
+.comandaTable td{
+    border: 2px solid rgba(137, 43, 226, 0.183);
+    padding: 1%;
+    font-size: 15px;
+    width: 5rem;
+}
