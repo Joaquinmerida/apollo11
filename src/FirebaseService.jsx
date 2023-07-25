@@ -20,13 +20,12 @@ class FirebaseService {
         return deleteDoc(pacienteDoc)
     }
 
-    /*getPedido = () =>{
+    getPedidos = () =>{
         return getDocs(pedidosRef)
-    }*/
-
+    }
     getPedido = (id) => {
-        const pacienteDoc = doc(db, "Pacientes", id);
-        return getDocs(pacienteDoc);
+        const pedidoDoc = doc(db, "Pedidos", id);
+        return getDocs(pedidoDoc);
     }
 }
 

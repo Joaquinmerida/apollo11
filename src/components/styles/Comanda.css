@@ -3,6 +3,8 @@
     padding: 1rem;
     margin: 1rem;
     border-collapse: collapse;
+    width: 7rem;
+    text-align: center;
 }
 
 .headerTable{

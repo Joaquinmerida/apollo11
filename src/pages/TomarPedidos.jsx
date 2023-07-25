@@ -14,6 +14,12 @@ const TomarPedidos = () => {
     const [platosPedido, setPlatosPedido] = useState([]);
     const [showPopup, setShowPopup] = useState(false);
     const [selectedDish, setSelectedDish] = useState(null);
+    const [total, setTotal] = useState(0);
+    const [adress, setAdress] = useState("")
+    const [customer, setCustomer] = useState("")
+    const [time, setTime] = useState("")
+    const [mesa, setMesa] = useState(1)
+
     const botonMesa = { backgroundColor: 'burlywood' }
     const botonDelivery = { backgroundColor: 'cadetblue' }
 
@@ -39,21 +45,41 @@ const TomarPedidos = () => {
     const handleDelete = useCallback((index) => {
         setPlatosPedido(prevPlatosPedido => {
             const updatedPlatosPedido = [...prevPlatosPedido];
-            updatedPlatosPedido.splice(index, 1);
+            const deletedItem = updatedPlatosPedido.splice(index, 1)[0];
+            const newTotal = total - deletedItem.precio * deletedItem.quantity;
+            setTotal(newTotal);
             return updatedPlatosPedido;
         });
-    }, []);
-
+    }, [total, setPlatosPedido, setTotal]);
 
     const handleSubmit = async () => {
-        const newPedido = {
+        let newPedido = {
             platos: platosPedido,
             date: serverTimestamp(),
         };
 
+        if (!delivery) {
+            newPedido = {
+                ...newPedido,
+                adress: adress,
+                customer: customer,
+                time: time,
+            };
+        } else {
+            newPedido = {
+                ...newPedido,
+                mesa: mesa,
+            }
+        }
+
         try {
             await FirebaseService.addPedido(newPedido)
-            setPlatosPedido([]); // Reiniciar el estado platosPedido después de enviar el pedido
+            setPlatosPedido([]);
+            setTotal(0)
+            setAdress("")
+            setMesa(1)
+            setTime("")
+            setCustomer("")
             console.log('Pedido enviado:', newPedido);
         } catch (error) {
             console.error('Error al enviar el pedido:', error);
@@ -63,46 +89,56 @@ const TomarPedidos = () => {
 
     const newDish = (name) => {
         const dishToAdd = platos.find((dish) => dish.nombre === name.name);
+
         if (dishToAdd) {
+            let newDishOrder = {
+                ...dishToAdd,
+                quantity: name.quantity,
+            };
             if (name.pasta) {
-                const newDishOrder = {
-                    ...dishToAdd,
-                    quantity: name.quantity,
+                newDishOrder = {
+                    ...newDishOrder,
                     sauce: name.sauce,
                     notes: name.notes,
-                }
-                setPlatosPedido([...platosPedido, newDishOrder]);
-                console.log("New dish added to the order:", newDishOrder);
+                };
             } else {
-                const newDishOrder = {
-                    ...dishToAdd,
-                    quantity: name.quantity,
+                newDishOrder = {
+                    ...newDishOrder,
                     notes: name.notes,
-                }
-                setPlatosPedido([...platosPedido, newDishOrder]);
-                console.log("New dish added to the order:", newDishOrder);
+                };
             }
+            setPlatosPedido([...platosPedido, newDishOrder]);
+            console.log("New dish added to the order:", newDishOrder);
+            setTotal(total + newDishOrder.precio * newDishOrder.quantity);
         }
-    }
+    };
+
 
     return (
         <>
             <h1>Nuevo Pedido</h1>
             <div className='comandaPedidoWrapper'>
-                {delivery === true ? (<button style={botonDelivery} className='switchDelivery' onClick={() => setDelivery(false)}> Mesa</button>) : <button style={botonMesa} className='switchDelivery' onClick={() => setDelivery(true)}> Delivery</button>}
-                {delivery === true ? (<div className='comandaHeader'><label id='smallLabel'>Número de mesa </label><input id='smallInput' type="number" /></div>) : <div className='comandaHeader'><label>Direccion:</label><input type="text" /> <label>Nombre:</label><input type="text" /> <label>Hora:</label><input type="text" /></div>}
-                <table className='platosWrapper'>
-                    <tbody>
-                        {platosPedido.map((plato, index) => (
-                            <ItemComanda
-                                plato={plato}
-                                key={index}
-                                onDelete={() => handleDelete(index)}
-                            />
-                        ))}
-                    </tbody>
-                </table>
-                <button onClick={handleSubmit}>Agregar pedido</button>
+                <div className='titleComanda'>
+                    {delivery === true ? (<button style={botonDelivery} className='switchDelivery' onClick={() => setDelivery(false)}> Mesa</button>) : <button style={botonMesa} className='switchDelivery' onClick={() => setDelivery(true)}> Delivery</button>}
+                    {delivery === true ? (<div className='comandaHeader'><label id='smallLabel'>Número de mesa </label><input onChange={(e) => setMesa(e.target.value)} id='smallInput' type="number" /></div>) : <div className='comandaHeader'><label>Direccion:</label><input onChange={(e) => setAdress(e.target.value)} type="text" /> <label>Nombre:</label><input onChange={(e) => setCustomer(e.target.value)} type="text" /> <label>Hora:</label><input onChange={(e) => setTime(e.target.value)} type="text" /></div>}
+                    <table className='platosWrapper'>
+                        <tbody>
+                            {platosPedido.map((plato, index) => (
+                                <ItemComanda
+                                    plato={plato}
+                                    key={index}
+                                    onDelete={() => handleDelete(index)}
+                                />
+                            ))}
+                            <tr className='totalRow'>
+                                <td colSpan={2}>Total:</td>
+                                <td>${total}</td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button className='botonAgregar' onClick={handleSubmit}>Agregar pedido</button>
+                </div>
             </div>
             <div className='botonesWrapper'>
                 <div className="botonesPasta botones">

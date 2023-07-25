@@ -40,10 +40,40 @@ h1{
     flex-direction: row;  
     flex-wrap: wrap;  
     justify-content: center;
+    min-height: 100px;
+}
+
+.comandaHeader input{
+height: 1rem
+}
+
+.totalRow{
+    font-weight: 900;
+    background-color: blue;
 }
 
 .comandaHeader label{
     width: 30%;
+}
+
+.titleComanda{
+background-color: aliceblue;
+width: 100%;
+min-height: 35%;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding-top: 1rem;
+}
+
+.botonAgregar{
+    padding: 0.5rem;
+    background-color: darkslategray;
+    color: aliceblue;
+    font-weight: 600;
+    margin: 1rem;
+
 }
 
 .botonesWrapper{
