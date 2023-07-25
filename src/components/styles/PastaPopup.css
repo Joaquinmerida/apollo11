@@ -1,0 +1,57 @@
+.dish-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dish-popup h3{
+    margin: 0% 0% 5%;
+    text-align: center;
+    font-size: 1.6rem;
+}
+.dish-popup {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    max-width: 400px;
+    width: 100%;
+    height: 30%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.dish-popup label{
+    width: 30%;
+    margin: 1%;
+}
+
+.dish-popup input{
+    width: 50%;
+    margin: 1%;
+    text-align: center;
+}
+
+.dish-popup-buttons{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.dish-popup-buttons button{
+    height: 2rem;
+    width: 40%;
+    margin: 4%;
+}
+
+.dish-popup-buttons button:hover{
+    background-color: goldenrod;
+}

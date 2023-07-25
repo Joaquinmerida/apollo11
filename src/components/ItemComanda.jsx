@@ -1,12 +1,13 @@
 import React from 'react'
+import "./styles/ItemComanda.css"
 
-const ItemComanda = ({nombre, precio, cantidad}) => {
+const ItemComanda = ({plato, onDelete}) => {
     return (
-        <tr>
-            <td>{cantidad}</td>
-            <td>{nombre}</td>
-            <td>${precio}</td>
-            <td> <button>X</button></td>
+        <tr className='comandaRow'>
+            <td>{plato.quantity}</td>
+            <td>{plato.nombre} {plato.sauce} {plato.notes}</td>
+            <td>${plato.precio}</td>
+            <td><button onClick={()=>onDelete(plato.nombre)}>X</button></td>
         </tr>
     )
 }
