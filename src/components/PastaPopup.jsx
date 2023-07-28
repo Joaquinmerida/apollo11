@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import "./styles/PastaPopup.css"
+import salsas from '../assets/Salsas';
 
 const DishPopup = ({ dishName, onSubmit, onCancel }) => {
     const [quantity, setQuantity] = useState(1);
@@ -24,7 +25,13 @@ const DishPopup = ({ dishName, onSubmit, onCancel }) => {
                 <h3>{dishName}</h3>
                 <label>Cantidad:</label> <input type="number" value={quantity} onChange={(e) => setQuantity(e.target.value)} />
                 <label>Relleno: </label><input type="text" value={filling} onChange={(e) => setFilling(e.target.value)} />
-                <label>Salsa: </label><input type="text" value={sauce} onChange={(e) => setSauce(e.target.value)} />
+                <label>Salsa: </label>
+                <select value={sauce} onChange={(e) => setSauce(e.target.value)}>
+                    <option value="">Selecciona una salsa</option>
+                    {salsas.map((salsa, index) => (
+                        <option key={index} value={salsa}>{salsa}</option>
+                    ))}
+                </select>
                 <label>Notas: </label><input type="text" value={notes} onChange={(e) => setNotes(e.target.value)} />
                 <div className="dish-popup-buttons">
                     <button onClick={handleSubmit} >Agregar a la orden</button>

@@ -88,18 +88,29 @@ const TomarPedidos = () => {
 
 
     const newDish = (name) => {
+        console.log(name);
         const dishToAdd = platos.find((dish) => dish.nombre === name.name);
-
+    
         if (dishToAdd) {
             let newDishOrder = {
                 ...dishToAdd,
                 quantity: name.quantity,
             };
-            if (name.pasta) {
+    
+            if (dishToAdd.pasta === true) {
+                const pastaAttributes = {};
+                if (name.sauce) {
+                    pastaAttributes.sauce = name.sauce;
+                }
+                if (name.filling) {
+                    pastaAttributes.filling = name.filling;
+                }
+                if (name.notes) {
+                    pastaAttributes.notes = name.notes;
+                }
                 newDishOrder = {
                     ...newDishOrder,
-                    sauce: name.sauce,
-                    notes: name.notes,
+                    ...pastaAttributes,
                 };
             } else {
                 newDishOrder = {
@@ -107,11 +118,13 @@ const TomarPedidos = () => {
                     notes: name.notes,
                 };
             }
+    
             setPlatosPedido([...platosPedido, newDishOrder]);
             console.log("New dish added to the order:", newDishOrder);
             setTotal(total + newDishOrder.precio * newDishOrder.quantity);
         }
     };
+
 
 
     return (

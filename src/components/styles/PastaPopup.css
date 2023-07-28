@@ -40,6 +40,12 @@
     text-align: center;
 }
 
+.dish-popup select{
+    width: 52%;
+    margin: 1%;
+    text-align: center;
+}
+
 .dish-popup-buttons{
     width: 100%;
     display: flex;
