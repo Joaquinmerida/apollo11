@@ -15,6 +15,28 @@ const VerPedidos = () => {
         setTodos(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     };
 
+
+    const updatePedido = (pedidoId, updatedPlatoIndex, updatedPlato) => {
+        try {
+            // Actualizar la lista de pedidos localmente
+            const updatedTodos = todos.map(pedido => {
+                if (pedido.id === pedidoId) {
+                    const updatedPlatos = pedido.platos.map((plato, index) =>
+                        index === updatedPlatoIndex ? { ...plato, ...updatedPlato } : plato
+                    );
+                    return { ...pedido, platos: updatedPlatos };
+                }
+                return pedido;
+            });
+
+            setTodos(updatedTodos);
+        } catch (error) {
+            console.error("Error updating dish:", error);
+        }
+    };
+
+
+
     if (todos && todos.length > 0) {
         return (
             <div className='comandasWrapper'>
@@ -22,6 +44,7 @@ const VerPedidos = () => {
                     <Comanda
                         key={plato.id}
                         pedido={plato}
+                        updatePedido={updatePedido}
                     />
                 ))}
             </div>
@@ -32,3 +55,7 @@ const VerPedidos = () => {
 }
 
 export default VerPedidos;
+
+
+
+// pasar el find como prop y hacer el find despues del await del update

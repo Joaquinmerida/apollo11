@@ -118,13 +118,11 @@ const TomarPedidos = () => {
                     notes: name.notes,
                 };
             }
-    
             setPlatosPedido([...platosPedido, newDishOrder]);
             console.log("New dish added to the order:", newDishOrder);
             setTotal(total + newDishOrder.precio * newDishOrder.quantity);
         }
     };
-
 
 
     return (

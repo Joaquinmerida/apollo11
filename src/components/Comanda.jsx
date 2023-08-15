@@ -1,7 +1,21 @@
 import React from 'react';
 import "./styles/Comanda.css";
+import FirebaseService from '../FirebaseService';
+import { useState, useEffect } from 'react';
 
-const Comanda = ({ pedido }) => {
+const Comanda = ({ pedido, updatePedido }) => {
+
+
+    const handleEntregar = async (platoIndex, currentState) => {
+        const updatedItem = { pronto: !currentState };
+        try {
+            await FirebaseService.updatePlatoInPedido(pedido.id, platoIndex, updatedItem);
+            updatePedido(pedido.id, platoIndex, updatedItem);
+        } catch (error) {
+            console.error("Error updating dish:", error);
+        }
+    }
+
     return (
         <table className='comandaTable'>
             <tbody>
@@ -23,7 +37,6 @@ const Comanda = ({ pedido }) => {
                 <tr>
                     <th>Cantidad</th>
                     <th>Plato</th>
-                    <th>$</th>
                     <th>Estado</th>
                 </tr>
                 {pedido.platos ? (
@@ -39,9 +52,8 @@ const Comanda = ({ pedido }) => {
                                             : `${item.nombre} ${item.filling} ${item.sauce} ${item.notes}`
                                         : `${item.nombre} ${item.notes}`}
                             </td>
-                            <td>{item.precio}</td>
-                            {!item.pronto ? <td>En preparacion</td> : <td>Entregado</td>}
-                            <td><button>CAMBIAR ESTADO</button></td>
+                            {!item.pronto ? <td className='preparacion'>En preparacion</td> : <td className='pronto'>Entregado</td>}
+                            <td><button onClick={() => handleEntregar(index, item.pronto)}>Entregar</button></td>
                         </tr>
                     ))
                 ) : (
